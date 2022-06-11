@@ -1,49 +1,35 @@
 extern crate reqwest;
-extern crate soup;
-extern crate markup5ever_rcdom;
 use rand::seq::SliceRandom;
 use tokio::runtime::Handle;
-use soup::Soup;
-use soup::prelude::*;
-use markup5ever_rcdom::Node;
-use soup::NodeExt;
-use std::error::Error;
-use soup::prelude::*;
+extern crate select;
 
-// #[derive(Debug, Clone)]
-// struct FnInfo {
-// 	name: String,
-// 	desc: String,
-// 	url: Option<String>,
-// }
+use select::document::Document;
+use select::predicate::{Attr, Class, Name, Predicate};
 
-// fn get_fn_info(tr: Node) -> Result<FnInfo, &'static String> {
-// 	let tds = tr.tag("td").find_all()
-// 		.collect::<Vec<_>>();
+#[derive(Debug, Clone)]
+struct FnInfo {
+	name: String,
+	url: String
+}
 
-// 	let name = tds[0].text();
-// 	let desc = tds[1].text();
-// 	let url = tds[0].tag("a").find().unwrap().get("href");
-
-// 	Ok(FnInfo {name: name, desc: desc, url: url})
-// }
-
-pub async fn fn_of_the_day() -> Soup { // Result<FnInfo, &'static str> {
-    let response = reqwest::get("https://www.mathworks.com/help/matlab/referencelist.html?type=function")
+pub async fn fn_of_the_day() -> () { // Result<FnInfo, &'static str> {
+	let base_url_folder = String::from("http://www.ece.northwestern.edu/local-apps/matlabhelp/techdoc/ref/");
+    let response = reqwest::get(format!("{}refbookl.html",base_url_folder))
     	.await.unwrap()
     	.text().await.unwrap();
 
-	let html_soup = Soup::new(&response);
+    let html_document = Document::from_read(response.as_bytes()).unwrap();
 	
-	html_soup
-	// let all_fn_info = html_soup
-	// 	.tag("tr")
- //        .find_all()
- //        .map(get_fn_info)
-		// .collect::<Vec<_>>();		
+	let fn_names_links: Vec<_> = html_document
+        .find(Name("p").child(Name("a")))
+        .filter(|el| !el.text().contains(" "))
+        .map(|el| FnInfo {name: el.text(), url: format!("{}{}",base_url_folder,el.attr("href").unwrap())})
+        .collect();
 
-	// let mut rng = rand::thread_rng();
-	// let choice = all_fn_info.choose(&mut rng);
+	let mut rng = rand::thread_rng();
+	let choice = fn_names_links.choose(&mut rng).unwrap();
 
+	println!("{:?}", choice);
 	// choice
+	choice;
 }
