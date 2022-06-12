@@ -13,6 +13,7 @@ async fn main() -> () {
     let chuck_norris_quote = get_chuck::chuck_norris_quote().await;
     let animal = get_animal::rand_animal().await;
     let gspc_data = get_stock::ohlc("^GSPC").await;
+    
     // todo: make all the api requests run on different threads here
     // join!(matlab_fn, chuck_norris_quote, animal);
 

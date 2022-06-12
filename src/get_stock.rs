@@ -50,10 +50,12 @@ pub async fn ohlc(ticker: &'static str) -> OHLCData { // Result<FnInfo, &'static
     let json_resp: StockAPIResponse = response.json().await.unwrap();
     let ohlc_data = &json_resp.chart.result.unwrap()[0].indicators.quote[0];
 
-    OHLCData {ticker: ticker,
-    		  open: *ohlc_data.open.last().unwrap(),
-    		  high: *ohlc_data.high.last().unwrap(),
-    		  low: *ohlc_data.low.last().unwrap(),
-    		  close: *ohlc_data.close.last().unwrap(),
-    		  volume: *ohlc_data.volume.last().unwrap()}
+    OHLCData {
+    	ticker: ticker,
+    	open: *ohlc_data.open.last().unwrap(),
+    	high: *ohlc_data.high.last().unwrap(),
+    	low: *ohlc_data.low.last().unwrap(),
+    	close: *ohlc_data.close.last().unwrap(),
+    	volume: *ohlc_data.volume.last().unwrap()
+    }
 }

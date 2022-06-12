@@ -6,7 +6,7 @@ use select::document::Document;
 use select::predicate::{Name, Predicate};
 
 #[derive(Debug, Clone)]
-pub struct FnBasicInfo {
+struct FnBasicInfo {
 	name: String,
 	url: String
 }
@@ -17,19 +17,6 @@ pub struct FnInfo {
 	pub url: String,
 	pub desc: String
 }
-
-// impl FnInfo {
-// 	fn name(&self) -> &String {
-// 		&self.name
-// 	}
-// 	fn url(&self) -> &String {
-// 		&self.url
-// 	}
-// 	fn desc(&self) -> &String {
-// 		&self.desc
-// 	}
-	
-// }
 
 pub async fn fn_of_the_day() -> FnInfo { // Result<FnInfo, &'static str> {
 	let base_url_folder = String::from("http://www.ece.northwestern.edu/local-apps/matlabhelp/techdoc/ref/");
