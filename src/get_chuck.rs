@@ -18,7 +18,7 @@ pub async fn chuck_norris_quote() -> String { // Result<FnInfo, &'static str> {
     	.await
     	.unwrap();
     
-    let chuck_quote = response.json::<Quote>().await.unwrap();
+    let chuck_quote: Quote = response.json().await.unwrap();
 
     chuck_quote.value
 }
