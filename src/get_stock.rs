@@ -2,6 +2,25 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
+pub async fn ohlc(ticker: &'static str) -> OHLCData { // Result<FnInfo, &'static str> {
+    let base_url = String::from("https://query2.finance.yahoo.com/v8/finance/chart/");
+    let response = reqwest::get(base_url + ticker)
+    	.await
+    	.unwrap();
+    
+    let json_resp: StockAPIResponse = response.json().await.unwrap();
+    let ohlc_data = &json_resp.chart.result.unwrap()[0].indicators.quote[0];
+
+    OHLCData {
+    	ticker: ticker,
+    	open: *ohlc_data.open.last().unwrap(),
+    	high: *ohlc_data.high.last().unwrap(),
+    	low: *ohlc_data.low.last().unwrap(),
+    	close: *ohlc_data.close.last().unwrap(),
+    	volume: *ohlc_data.volume.last().unwrap()
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 struct StockAPIResponse {
 	chart: StockAPIChartResponse
@@ -39,23 +58,4 @@ pub struct OHLCData {
 	low: f64,
 	close: f64,
 	volume: f64
-}
-
-pub async fn ohlc(ticker: &'static str) -> OHLCData { // Result<FnInfo, &'static str> {
-    let base_url = String::from("https://query2.finance.yahoo.com/v8/finance/chart/");
-    let response = reqwest::get(base_url + ticker)
-    	.await
-    	.unwrap();
-    
-    let json_resp: StockAPIResponse = response.json().await.unwrap();
-    let ohlc_data = &json_resp.chart.result.unwrap()[0].indicators.quote[0];
-
-    OHLCData {
-    	ticker: ticker,
-    	open: *ohlc_data.open.last().unwrap(),
-    	high: *ohlc_data.high.last().unwrap(),
-    	low: *ohlc_data.low.last().unwrap(),
-    	close: *ohlc_data.close.last().unwrap(),
-    	volume: *ohlc_data.volume.last().unwrap()
-    }
 }

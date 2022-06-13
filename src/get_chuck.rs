@@ -2,17 +2,6 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Quote {
-	categories: Vec<String>,
-	created_at: String,
-	icon_url: String,
-	id: String,
-	updated_at: String,
-	url: String,
-    value: String,
-}
-
 pub async fn chuck_norris_quote() -> Quote { // Result<FnInfo, &'static str> {
     let response = reqwest::get("https://api.chucknorris.io/jokes/random?category=dev")
     	.await
@@ -23,3 +12,13 @@ pub async fn chuck_norris_quote() -> Quote { // Result<FnInfo, &'static str> {
     chuck_quote
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Quote {
+	categories: Vec<String>,
+	created_at: String,
+	icon_url: String,
+	id: String,
+	updated_at: String,
+	url: String,
+    value: String,
+}

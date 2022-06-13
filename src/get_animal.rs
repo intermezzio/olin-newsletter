@@ -2,6 +2,16 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
+pub async fn rand_animal() -> Animal { // Result<FnInfo, &'static str> {
+    let response = reqwest::get("https://zoo-animal-api.herokuapp.com/animals/rand")
+    	.await
+    	.unwrap();
+    
+    let animal: Animal = response.json().await.unwrap();
+
+    animal.clone()
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Animal {
 	name: String,
@@ -18,14 +28,4 @@ pub struct Animal {
 	geo_range: String,
 	image_link: String,
 	id: i32,
-}
-
-pub async fn rand_animal() -> Animal { // Result<FnInfo, &'static str> {
-    let response = reqwest::get("https://zoo-animal-api.herokuapp.com/animals/rand")
-    	.await
-    	.unwrap();
-    
-    let animal: Animal = response.json().await.unwrap();
-
-    animal.clone()
 }

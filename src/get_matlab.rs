@@ -1,22 +1,9 @@
 extern crate reqwest;
-use rand::seq::SliceRandom;
 extern crate select;
-
+use rand::seq::SliceRandom;
 use select::document::Document;
 use select::predicate::{Name, Predicate};
 
-#[derive(Debug, Clone)]
-struct FnBasicInfo {
-	name: String,
-	url: String
-}
-
-#[derive(Debug, Clone)]
-pub struct FnInfo {
-	pub name: String,
-	pub url: String,
-	pub desc: String
-}
 
 pub async fn fn_of_the_day() -> FnInfo { // Result<FnInfo, &'static str> {
 	let base_url_folder = String::from("http://www.ece.northwestern.edu/local-apps/matlabhelp/techdoc/ref/");
@@ -55,4 +42,17 @@ async fn fn_descriptor(url: String) -> String {
     	.next()
     	.unwrap()
     	.text()
+}
+
+#[derive(Debug, Clone)]
+struct FnBasicInfo {
+	name: String,
+	url: String
+}
+
+#[derive(Debug, Clone)]
+pub struct FnInfo {
+	pub name: String,
+	pub url: String,
+	pub desc: String
 }
