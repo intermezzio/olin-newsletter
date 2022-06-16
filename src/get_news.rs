@@ -25,21 +25,23 @@ pub async fn top_headlines(api_key: String) -> NewsResponse { // Result<FnInfo, 
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct NewsResponse {
 	status: String,
-	totalResults: i32,
+	total_results: i32,
 	articles: Vec<Article>
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 struct Article {
 	source: Option<ArticleSource>,
 	author: Option<String>,
 	title: Option<String>,
 	description: Option<String>,
 	url: Option<String>,
-	urlToImage: Option<String>,
-	publishedAt: Option<String>,
+	url_to_image: Option<String>,
+	published_at: Option<String>,
 	content: Option<String>
 }
 
