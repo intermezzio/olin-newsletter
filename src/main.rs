@@ -5,6 +5,7 @@ mod get_animal;
 mod get_stock;
 mod get_config;
 mod get_news;
+mod get_weather;
 
 #[tokio::main]
 async fn main() -> () {
@@ -20,6 +21,9 @@ async fn main() -> () {
     let matlab_fn = get_matlab::fn_of_the_day().await;
     let chuck_norris_quote = get_chuck::chuck_norris_quote().await;
     let animal = get_animal::rand_animal().await;
+    let forecast = get_weather::hourly_forecast(
+        config_vars.weatherbit.unwrap()
+        ).await;
     // this fails if the api is run from 9am - 4pm ET, will fix later
     // let gspc_data = get_stock::ohlc("^GSPC").await;
     
@@ -30,5 +34,6 @@ async fn main() -> () {
     println!("{:?}", matlab_fn);
     println!("{:?}", chuck_norris_quote);
     println!("{:?}", animal);
+    println!("{:?}", forecast);
     // println!("{:?}", gspc_data);
 }

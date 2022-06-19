@@ -13,5 +13,6 @@ pub fn api_keys_and_emails() -> ConfigVars {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ConfigVars {
-    pub newsapi: Option<String>
+    pub newsapi: Option<String>,
+    pub weatherbit: Option<String>
 }
