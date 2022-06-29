@@ -2,7 +2,7 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
-pub async fn chuck_norris_quote() -> Quote { // Result<FnInfo, &'static str> {
+pub async fn download() -> Quote { // Result<FnInfo, &'static str> {
     let response = reqwest::get("https://api.chucknorris.io/jokes/random?category=dev")
     	.await
     	.unwrap();

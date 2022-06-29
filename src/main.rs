@@ -12,20 +12,20 @@ async fn main() -> () {
     println!("Hello, world!");
 
     // get config variables
-    let config_vars = get_config::api_keys_and_emails();
+    let config_vars = get_config::load();
 
     // create tasks for all api requests
-    let news_headlines = get_news::top_headlines(
+    let news_headlines = get_news::download(
         config_vars.newsapi.unwrap())
         .await;
-    let matlab_fn = get_matlab::fn_of_the_day().await;
-    let chuck_norris_quote = get_chuck::chuck_norris_quote().await;
-    let animal = get_animal::rand_animal().await;
-    let forecast = get_weather::hourly_forecast(
+    let matlab_fn = get_matlab::download().await;
+    let chuck_norris_quote = get_chuck::download().await;
+    let animal = get_animal::download().await;
+    let forecast = get_weather::download(
         config_vars.weatherbit.unwrap()
         ).await;
     // this fails if the api is run from 9am - 4pm ET, will fix later
-    // let gspc_data = get_stock::ohlc("^GSPC").await;
+    // let gspc_data = get_stock::download("^GSPC").await;
     
     // todo: make all the api requests run on different threads here
     // join!(matlab_fn, chuck_norris_quote, animal);

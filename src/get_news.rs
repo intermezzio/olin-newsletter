@@ -3,7 +3,7 @@ extern crate serde;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue, USER_AGENT};
 use serde::{Deserialize, Serialize};
 
-pub async fn top_headlines(api_key: String) -> NewsResponse { // Result<FnInfo, &'static str> {
+pub async fn download(api_key: String) -> NewsResponse { // Result<FnInfo, &'static str> {
 	let base_url = "http://newsapi.org/v2/top-headlines?country=us";
 	let mut headers = HeaderMap::new();
 	headers.insert(USER_AGENT, HeaderValue::from_static("Sample Rust Program"));

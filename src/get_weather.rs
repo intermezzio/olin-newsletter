@@ -2,7 +2,7 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
-pub async fn hourly_forecast(api_key: String) -> WeatherData { // Result<FnInfo, &'static str> {
+pub async fn download(api_key: String) -> WeatherData { // Result<FnInfo, &'static str> {
 	println!("Hello World");
 
 	WeatherData {}

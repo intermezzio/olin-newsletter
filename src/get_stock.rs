@@ -2,7 +2,7 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
-pub async fn ohlc(ticker: &'static str) -> OHLCData { // Result<FnInfo, &'static str> {
+pub async fn download(ticker: &'static str) -> OHLCData { // Result<FnInfo, &'static str> {
     let base_url = String::from("https://query2.finance.yahoo.com/v8/finance/chart/");
     let response = reqwest::get(base_url + ticker)
     	.await

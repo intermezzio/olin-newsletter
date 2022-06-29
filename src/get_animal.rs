@@ -2,7 +2,7 @@ extern crate reqwest;
 extern crate serde;
 use serde::{Deserialize, Serialize};
 
-pub async fn rand_animal() -> Animal { // Result<FnInfo, &'static str> {
+pub async fn download() -> Animal { // Result<FnInfo, &'static str> {
     let response = reqwest::get("https://zoo-animal-api.herokuapp.com/animals/rand")
     	.await
     	.unwrap();
